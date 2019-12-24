@@ -18,6 +18,20 @@ database.on('error', console.error.bind(console, 'connection error:'));
 app.use(bodyParser.json());
 
 /**
+ * Heartbeat endpoint
+ */
+app.get('/heartbeat', (req, res) => {
+
+    var status = {
+        success: true,
+        address: config.get("server.host"),
+        port: config.get("server.port")
+    };
+
+    res.send(status);
+});
+
+/**
  * Get all books 
  */
 app.get('/books', (req, res) => {

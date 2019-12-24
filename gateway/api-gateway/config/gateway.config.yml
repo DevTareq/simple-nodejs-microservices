@@ -1,0 +1,45 @@
+http:
+  port: 8888
+apiEndpoints:
+  books:
+    host: '*'
+    paths: '/books*'  
+  customers:
+    host: '*'
+    paths: '/customers*'  
+  orders:
+    host: '*'
+    paths: '/orders*' 
+serviceEndpoints:
+  booksSrv: 
+    url: 'http://localhost:3030/'  
+  customersSrv: 
+    url: 'http://localhost:3040/'  
+  ordersSrv: 
+    url: 'http://localhost:3050/'  
+policies:
+  - key-auth
+  - proxy
+pipelines:
+  default-1:
+    apiEndpoints:
+      - books
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: booksSrv 
+  default-2:
+    apiEndpoints:
+      - customers
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: customersSrv 
+  default-3:
+    apiEndpoints:
+      - orders
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: ordersSrv
+            
